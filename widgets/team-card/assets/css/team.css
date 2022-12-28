@@ -1,0 +1,57 @@
+/*------------------------------------------
+                Common
+-------------------------------------------*/
+.block--team-card .profiles {
+    margin: unset;
+    padding: unset;
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.block--team-card .profiles .social-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.block--team-card .profiles .social-item a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/*------------------------------------------
+                Layout 1
+-------------------------------------------*/
+.block--team-card .layout-content__below{
+    display: flex;
+    flex-direction: column;
+}
+
+.block--team-card .layout-content__below .image-wrapper {
+    overflow: hidden;
+}
+
+.block--team-card .layout-content__below img{
+    transform: scale(1.005) translateZ(0);
+    transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+}
+
+.block--team-card .layout-content__below .rte-content h3 {
+    margin-bottom: 5px;
+}
+
+/*------------------------------------------
+                Layout 4
+-------------------------------------------*/
+.block--team-card .layout--content-card {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding-top: 60px;
+    padding-bottom: 55px;
+    box-shadow: 3px 3px 6px 6px rgb(0 0 0 / 2%);
+}
