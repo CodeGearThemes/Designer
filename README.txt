@@ -4,7 +4,7 @@ Tags: codegearthemes, codegear, elementor, page builder, import, sites
 Requires at least: 5.1
 Tested up to: 6.1
 Requires PHP: 7.2
-Stable tag: 1.0.23
+Stable tag: 1.0.24
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://www.buymeacoffee.com/codegearthemes
@@ -47,7 +47,10 @@ This plugin adds custom made elementor widgets which helps to customize with ele
 
 == Changelog ==
 
-= 1.0.23 (Released: Dev. 1, 2022) =
+= 1.0.24 (Released: Jan. 1, 2023) =
+* Breadcrumbs
+
+= 1.0.23 (Released: Dec. 1, 2022) =
 * Before & After Widget
 * Gallery Widget
 * Lightbox Widget
