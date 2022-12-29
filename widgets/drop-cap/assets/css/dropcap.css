@@ -1,0 +1,14 @@
+.drop-cap-content .designer-letter{
+  display:block;
+  float: left;
+  font-size: 60px;
+  line-height: 1em;
+  width: 1em;
+  height: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+} */
+ .drop-cap-content .designer-text{
+    margin:0;
+}

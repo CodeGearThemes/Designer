@@ -15,6 +15,7 @@ class Widget_Lists {
     public function register_widget( $widgets_manager ) {
 
         $widgets = [
+            'drop-cap',
             'social',
             'slider',
             'images',
