@@ -132,7 +132,7 @@ class Social extends Widget_Base{
                     'library' => 'fa-brands',
                 ],
             ]
-		);
+			);
 
         $repeater->add_control(
 			'title',

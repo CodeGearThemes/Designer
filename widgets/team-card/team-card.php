@@ -18,7 +18,6 @@ class Team_Card extends Widget_Base {
 
         parent::__construct($data, $args);
         wp_register_style( 'team-cards', \Designer::plugin_url().'widgets/team-card/assets/team.css', array(), '1.0.0', 'all' );
-
     }
 
     /**
