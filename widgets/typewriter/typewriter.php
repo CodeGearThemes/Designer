@@ -20,7 +20,7 @@ class Typewriter extends Widget_Base {
     public function __construct($data = [], $args = null) {
 
         parent::__construct($data, $args);
-        wp_register_script( 'typewriter', \Designer::plugin_url().'widgets/typewriter/assets/typewriter.js', array('elementor-frontend'), '1.0.0', true );
+         wp_register_script( 'typewriter', \Designer::plugin_url().'widgets/typewriter/assets/typewriter.js', array('elementor-frontend'), '1.0.0', true );
 
     }
 

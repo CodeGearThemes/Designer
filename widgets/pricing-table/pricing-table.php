@@ -278,6 +278,187 @@ class Pricing_Table extends Widget_base{
 		);
 		$this->end_controls_section();
 
+		// Style Tab Start
+		//Style for title 
+		$this->start_controls_section(
+			'section_title_style',
+			[
+				'label' => esc_html__( 'Title Style', 'designer' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'title_tag',
+			[
+				'label' => __( 'Title Tag', 'designer' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div'
+				],
+				'default' => 'h2',
+			]
+		);
+		$this->add_control(
+			'title_style',
+			[
+				'label' => esc_html__( 'Title Style', 'designer' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .pt-container .pt-title' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[   'label'=>'Title Typography',
+				'name' => 'title_typography',
+				'selector' => '{{WRAPPER}} .pt-container .pt-title',
+			]
+		);
+
+		$this->add_control(
+            'title_margin',
+            [
+                'label'      => __( 'Title Margin', 'designer' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%' ],
+                'selectors'  => [
+                    '{{WRAPPER}} .pt-container .pt-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+		$this->end_controls_section();
+
+		//Style for Price 
+		$this->start_controls_section(
+			'section_price_style',
+			[
+				'label' => esc_html__( 'Price Style', 'designer' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'price_color',
+			[
+				'label' => esc_html__( 'Price Color', 'designer' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-value' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[   'label'=>'Price Typography',
+				'name' => 'price_typography',
+				'selector' => '{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-value',
+			]
+		);
+
+		$this->add_control(
+			'currency_color',
+			[
+				'label' => esc_html__( 'Currency Color', 'designer' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-currency' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[   'label'=>'Currency Typography',
+				'name' => 'currency_typography',
+				'selector' => '{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-currency',
+			]
+		);
+
+		$this->add_control(
+			'currency_position',
+			[
+				'label'=>__('Currency Position', 'designer'),
+				'type'=>Controls_Manager::SELECT,
+				'options'=>[
+					'row'=>esc_html__('Left from Price','designer'),
+					'row-reverse'=>esc_html__('Right from Price','designer')
+				],
+				'default'=>'row',
+				'selectors'=>[
+					'{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-currency'=>'flex-direction:{{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'period_color',
+			[
+				'label' => esc_html__( 'Period Color', 'designer' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-period' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[   'label'=>'Period Typography',
+				'name' => 'period_typography',
+				'selector' => '{{WRAPPER}} .pt-container .pt-price .pt-price-period',
+			]
+		);
+
+		$this->add_control(
+            'price_margin',
+            [
+                'label'      => __( 'Price Margin', 'designer' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%' ],
+                'selectors'  => [
+                    '{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-value' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+		$this->add_control(
+            'currency_margin',
+            [
+                'label'      => __( 'Currency Margin', 'designer' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%' ],
+                'selectors'  => [
+                    '{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-currency' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+		$this->add_control(
+            'period_margin',
+            [
+                'label'      => __( 'Period Margin', 'designer' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%' ],
+                'selectors'  => [
+                    '{{WRAPPER}} .pt-container .pt-price .pt-price-period' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+		
+		$this->end_controls_section();
+
     }
 
     /**
@@ -291,13 +472,19 @@ class Pricing_Table extends Widget_base{
 	protected function render() {
 		$settings=$this->get_settings_for_display();
 		$items=$settings['items'];
+		$title_tag=$settings['title_tag'];
 		// echo "<pre>";
 		// print_r($settings);
 		// echo "</pre>";
 		// die();
 		?>
 			<div class="pt-container">
-				<h2 class="pt-title"><?php echo esc_html($settings['title']); ?></h2>
+				<?php $title_tag = isset($title_tag) && !empty($title_tag) ? $title_tag : 'h2'; 
+					  if(!empty($settings['title'])){ ?>
+						<<?php echo esc_attr($title_tag); ?> class="pt-title"> 
+							<?php echo esc_html($settings['title']); ?>
+						</<?php echo esc_attr($title_tag); ?>>
+					<?php } ?>
 				<div class="pt-price">
 					<div class="pt-price-wrapper">
 						<span class="pt-price-currency"><?php echo esc_html($settings['currency']);?></span>
@@ -323,7 +510,7 @@ class Pricing_Table extends Widget_base{
 						</span>
 					</a>
 				</div>
-				<span class="pt-label">new</span>
+				<span class="pt-label"><?php echo esc_html($settings['label']);?></span>
 			</div>
 		<?php
 

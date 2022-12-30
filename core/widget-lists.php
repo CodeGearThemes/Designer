@@ -15,6 +15,7 @@ class Widget_Lists {
     public function register_widget( $widgets_manager ) {
 
         $widgets = [
+            'service',
             'pricing-table',
             'drop-cap',
             'social',
