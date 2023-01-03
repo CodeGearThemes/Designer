@@ -243,6 +243,15 @@ class Slider extends Widget_Base {
 				'placeholder' => 'https://example.com',
 			]
 		);
+        $repeater->add_control(
+            'video_link',
+            [
+                'label'=>__('Video Link','designer'),
+                'type' => Controls_Manager::URL,
+                'label_block'=>true,
+                'placeholder' => 'Link from Media only',
+            ]
+        );
 
         $repeater->add_control(
 			'button_arrow_icon',
@@ -302,21 +311,21 @@ class Slider extends Widget_Base {
                 'toggle' => true,
             ]
         );
-
-        $this->add_control(
-			'slides',
-			[
-				'show_label' => false,
-				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'title_field' => '<# print(title || "Slide Item"); #>',
-                'default' => array_fill( 0, 2, [
-                    'image' => [
-                        'url' => Utils::get_placeholder_image_src(),
-                    ],
-                ])
-			]
-		);
+            $this->add_control(
+                'slides',
+                [
+                    'show_label' => false,
+                    'type' => Controls_Manager::REPEATER,
+                    'fields' => $repeater->get_controls(),
+                    'title_field' => '<# print(title || "Slide Item"); #>',
+                    'default' => array_fill( 0, 2, [
+                        'image' => [
+                            'url' => Utils::get_placeholder_image_src(),
+                        ],
+                    ])
+                ]
+            );
+        
 
         $this->end_controls_section();
         $this->register_slider_controls();
@@ -438,6 +447,18 @@ class Slider extends Widget_Base {
 				'frontend_available' => true,
 			]
         );
+
+        $this->add_control(
+            'video_play',
+            [
+                'label' => __('Video Play','designer'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' =>__('Yes','designer'),
+                'label_off' =>__('No','designer'),
+                'default' =>'no',
+                'frontend_available' =>true
+            ]
+            );
 
 		$this->end_controls_section();
     }
@@ -1257,7 +1278,6 @@ class Slider extends Widget_Base {
             <div id="block_slider_<?php echo esc_attr( $this->get_id() ) ?>" class="swiper">
                 <div class="slider-inner slider-wrapper swiper-wrapper">
                     <?php
-                        $count = 0;
                         foreach ( $settings['slides'] as $slide ) : ?>
                             <?php
                                 $this->add_render_attribute( 'image', 'src', $slide['image']['url'] );
@@ -1268,17 +1288,14 @@ class Slider extends Widget_Base {
 
                             <div class="swiper-slide slider-slide">
                                 <div class="slider-image <?php echo esc_attr( $settings['image_render'] ); ?>">
-									<?php
-									    if( $count == 0 && isset( $slide['image']['id'] ) ):
-										$image_large = wp_get_attachment_image_src( $slide['image']['id'], 'full');
-										$image_large_srcset = wp_get_attachment_image_srcset( $slide['image']['id'] ); ?>
-										<img width="<?php echo absint($image_large['1']) ?>" height="<?php echo absint($image_large['2']) ?>" src="<?php echo esc_url( $image_large ); ?>" 
-											 srcset="<?php echo esc_attr( $image_large_srcset ); ?>"
-											 alt=" <?php echo esc_html( $slide['image']['alt'] ); ?> ">
-									<?php else: ?>
-										<?= \Elementor\Group_Control_Image_Size::get_attachment_image_html( $slide, 'thumbnail', 'image' ); ?>
-									<?php endif; ?>
-								</div>
+                                <?php if((isset($slide['video_link']['url']) && !empty($slide['video_link']['url'])) && $settings['video_play']=='yes'){ ?>
+                                    <video autoplay muted loop>
+                                        <source src="<?php echo $slide['video_link']['url'];?>" ></source>
+                                    </video>
+                                <?php }else{
+                                    echo(\Elementor\Group_Control_Image_Size::get_attachment_image_html( $slide, 'thumbnail', 'image' )); 
+                                }?>        
+                                </div>
                                 <?php if ( !empty($slide['title']) || !empty($slide['subtitle']) ) : ?>
                                     <?php $classes = [ $slide['caption_alignment'], $slide['caption_vertical_aligment'] ]; ?>
                                     <div class="slider-caption-item">
@@ -1312,7 +1329,6 @@ class Slider extends Widget_Base {
                             </div>
 
                         <?php
-                        $count++;
                         endforeach;
                     ?>
                 </div>
