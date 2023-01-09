@@ -18,6 +18,12 @@ use Elementor\Group_Control_Background;
 
 class Pricing_Table extends Widget_base{
 
+	public function __construct($data=[], $args =null){
+		parent::__construct($data, $args);
+		wp_register_style('pricing-table',\Designer::plugin_url().'widgets/pricing-table/assets/css/pricing-table.css',array(),'1.0.0','all');
+
+	}
+
     /**
 	 * Get widget name.
 	 *
@@ -95,6 +101,15 @@ class Pricing_Table extends Widget_base{
 	public function get_keywords() {
 		return ['drop', 'drop cap' ];
 	}
+
+	/**
+     * Widget Style.
+     *
+     * @return string
+     */
+    public function get_style_depends() {
+        return [ 'pricing-table' ];
+    }
 
     /**
 	 * Register list widget controls.
@@ -215,7 +230,8 @@ class Pricing_Table extends Widget_base{
 		);
 		
         $this->end_controls_section();
-		/* section for button */
+
+		/* section for button starts here*/
         $this->start_controls_section(
 			'button_settings',
 			[
@@ -243,6 +259,8 @@ class Pricing_Table extends Widget_base{
 		);
 
         $this->end_controls_section();
+		/* section for button ends here*/
+
 		/*section for button icon */ 
 		$this->start_controls_section(
 			'button_icon_settings',
@@ -253,21 +271,17 @@ class Pricing_Table extends Widget_base{
 		);
 
 		$this->add_control(
-            'icon',
+            'button_icon',
             [
-                'label' => __( 'Scroll icon', 'designer' ),
+                'label' => __( 'Icon', 'designer' ),
                 'type' => Controls_Manager::ICONS,
-				'default' => [
-                    'value' => 'fab fa-elementor',
-                    'library' => 'fa-brands',
-                ],
 			]
 		);
 
 		$this->add_control(
-			'layout',
+			'icon_position',
 			[
-				'label'     => __( 'Layout', 'designer' ),
+				'label'     => __( 'Icon Position', 'designer' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => [
 					'left'        => __( 'Left', 'designer' ),
@@ -277,9 +291,10 @@ class Pricing_Table extends Widget_base{
 			]
 		);
 		$this->end_controls_section();
+		/*section for button icon ends here*/ 
 
-		// Style Tab Start
-		//Style for title 
+		/* Style Tab Start
+		Style for title start here */
 		$this->start_controls_section(
 			'section_title_style',
 			[
@@ -318,7 +333,7 @@ class Pricing_Table extends Widget_base{
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
-			[   'label'=>'Title Typography',
+			[   'label'=>esc_html__('Title Typography','designer'),
 				'name' => 'title_typography',
 				'selector' => '{{WRAPPER}} .pt-container .pt-title',
 			]
@@ -337,8 +352,9 @@ class Pricing_Table extends Widget_base{
         );
 
 		$this->end_controls_section();
+		/*Style for title ends here */
 
-		//Style for Price 
+		/*Style for Price starts here*/
 		$this->start_controls_section(
 			'section_price_style',
 			[
@@ -379,7 +395,7 @@ class Pricing_Table extends Widget_base{
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
-			[   'label'=>'Currency Typography',
+			[   'label'=>esc_html__('Currency Typography','designer'),
 				'name' => 'currency_typography',
 				'selector' => '{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-currency',
 			]
@@ -396,10 +412,23 @@ class Pricing_Table extends Widget_base{
 				],
 				'default'=>'row',
 				'selectors'=>[
-					'{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper .pt-price-currency'=>'flex-direction:{{VALUE}}',
+					'{{WRAPPER}} .pt-container .pt-price .pt-price-wrapper'=>'flex-direction:{{VALUE}}',
 				],
 			]
 		);
+
+		$this->add_control(
+			'period_position',
+			[
+				'label'=>__('Period Position','designer'),
+				'type' => Controls_Manager::SELECT,
+				'options'=>[
+					'side'=>esc_html__('Side','designer'),
+					'bottom'=>esc_html__('Botton','designer'),
+				],
+				'default_value'=>'side',
+			]
+			);
 
 		$this->add_control(
 			'period_color',
@@ -414,7 +443,7 @@ class Pricing_Table extends Widget_base{
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
-			[   'label'=>'Period Typography',
+			[   'label'=>esc_html__('Period Typography','designer'),
 				'name' => 'period_typography',
 				'selector' => '{{WRAPPER}} .pt-container .pt-price .pt-price-period',
 			]
@@ -458,6 +487,273 @@ class Pricing_Table extends Widget_base{
 
 		
 		$this->end_controls_section();
+		/* Style for price ends here*/
+
+		/* Style for List starts here */
+		$this->start_controls_section(
+			'section_list_style',
+			[
+				'label' => esc_html__( 'List Style', 'designer' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'list_type',
+			[
+				'label' => esc_html__('List Type','designer'),
+				'type' =>Controls_Manager::SELECT,
+				'options'=>[
+					'unordered'=>__('Unordered','designer'),
+					'ordered'=>__('Ordered','designer'),
+					'none'=>__('none', 'designer'),
+				],
+				'default'=>'unordered',
+
+			]
+		);
+
+		// $this->add_control(
+		// 	'list_style_position',
+		// 	[
+		// 		'label'=>esc_html__('List style Position','designer'),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options'=>[
+		// 			'inside'=>__('inside','designer'),
+		// 			'outside'=>__('outside','designer'),
+		// 		],
+		// 		'condition'=>[
+		// 			'list_type'=>'unordered',
+		// 			'list_type'=>'ordered',
+		// 		]
+		// 	]	
+		// );
+
+		$this->add_control(
+			'items_icon',
+			[
+				'label' => __( 'Items Icon', 'designer' ),
+                'type' => Controls_Manager::ICONS,
+				'default' => [
+                    'value' => 'fab fa-elementor',
+                    'library' => 'fa-brands',
+                ],
+				'condition'=>[
+					'list_type'=>'unordered'
+				]
+			]
+		);
+
+		$this->add_control(
+			'items_icon_color',
+			[
+				'label'=>__('Items Icon Color','designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-li-icon'=>'color:{{VALUE}}'
+				],
+				'condition'=>[
+					'list_type'=>'unordered'
+				]
+			]
+		);
+
+		$this->add_control(
+			'items_icon_size',
+			[
+				'label'=>__('Items Icon Size', 'designer'),
+				'type'=>Controls_Manager::SLIDER,
+				'size_units'=>['px','em'],
+				'default'   => [
+					'size' => 50,
+					'unit' => 'px'
+				],
+				'selectors'=>[
+					'{{WRAPPER}} .pt-li-icon'=>'font-size:{{SIZE}}{{UNIT}}'
+				],
+				'condition'=>[
+					'list_type'=>'unordered',
+				]
+			]
+		);
+
+		$this->add_control(
+			'items_icon_margin_right',
+			[
+				'label'=>__('Items Icon Margin Right','designer'),
+				'type'=>Controls_Manager::SLIDER,
+				'size_units'=>['px','em','%'],
+				'default'=>[
+					'size'=>50,
+					'unit'=>'px'
+				],
+				'selectors'=>[
+					'{{WRAPPER}} .pt-li-icon'=>'margin-right:{{SIZE}}{{UNIT}};',
+				],
+				'condition'=>[
+					'list_type'=>'unordered',
+				]
+			]
+		);
+
+		$this->add_control(
+			'icon_vertical_offset',
+			[
+				'label'=>__('Icon Vertical Offset','designer'),
+				'type'=>Controls_Manager::SLIDER,
+				'size_units'=>['px','em'],
+				'range'=>[
+					'px'=>[
+						'min'=>-50,
+						'max'=>50,
+					],
+					'em'=>[
+						'min'=> -10,
+						'max'=> 10,
+					]
+					],
+					'selectors'=>[
+						'{{WRAPPER}} .pt-li-icon' =>'transform:translateY({{SIZE}}{{UNIT}});'
+					],
+					'condition'=>[
+						'list_type'=>'unordered'
+					]
+			]
+		);
+
+		$this->end_controls_section();
+		/* style for List ends here */
+
+		/*style for label starts here */
+		$this->start_controls_section(
+			'section_label_style',
+			[
+				'label'=> esc_html__('Label Style', 'designer'),
+				'tab'=>Controls_Manager::TAB_STYLE,
+			]
+		);
+		
+		$this->add_control(
+			'label_type',
+			[
+				'label'=>__('Label Badge','designer'),
+				'type'=>Controls_Manager::SELECT,
+				'options'=>[
+					'badge'=>__('Badge','designer'),
+					'ribbon'=>__('Ribbon','designer'),
+				],
+				'default'=>'badge',
+			]
+			);
+		
+		$this->add_control(
+			'label_color',
+			[
+				'label'=>esc_html__('Label Color','designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-label'=>'color:{{VALUE}}'
+				],
+			]
+		);
+		$this->add_control(
+			'label_background_color',
+			[
+				'label'=>esc_html__('Label Background Color','designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-label'=>'background-color:{{VALUE}}'
+				],
+			]
+		);
+
+		// $this->add_group_control(
+		// 	Group_Control_Typography::get_type(),
+		// 	[
+		// 		'label'=>esc_html__('Label Typography', 'designer'),
+		// 		'name'=>'Label Typography',
+		// 		'selectors'=>[
+		// 			'{{WRAPPER}} .pt-label'
+		// 		]
+		// 	]
+		// );
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[   'label'=>esc_html__('Label Typography','designer'),
+				'name' => 'label_typography',
+				'selector' => '{{WRAPPER}} .pt-container .pt-label',
+			]
+		);
+
+		$this->add_control(
+			'label_padding',
+			[
+				'label'=>esc_html__('Label Padding','designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'size_units'=>['px','%'],
+				'selectors'=>['{{WRAPPER}} .pt-label' => 'padding:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+			]
+		);
+
+		$this->add_control(
+			'label_border_radius',
+			[
+				'label'=>esc_html__('Label Border Radius','designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'size_units'=>['px','%'],
+				'selectors'=>['{{WRAPPER}} .pt-label'=>'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+				'condition'=>[
+					'label_type'=>'badge',
+				]
+			],
+		);
+		$this->add_control(
+			'label_position',
+			[
+				'label'=>esc_html__('Label Position', 'designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'size_units'=>['px','%'],
+				'selectors'=>['{{WRAPPER}} .pt-label'=>'top:{{TOP}}{{UNIT}}; right:{{RIGHT}}{{UNIT}}; '],
+			]
+		);
+
+		$this->end_controls_section();
+		/*style for label ends here */
+
+		/*style for Table start here */
+		$this->start_controls_section(
+			'section_table_style',
+			[
+				'label'=>esc_html__('Table Style','designer'),
+				'tab'=>Controls_Manager::TAB_STYLE,
+			]
+			);
+		
+		$this->add_responsive_control(
+            'table-alignment',
+            [
+                'label'     => __( 'Alignment', 'designer' ),
+                'type'      => Controls_Manager::CHOOSE,
+                'options'   => [
+                    'left' => [
+                        'title' => __( 'Left', 'designer' ),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __( 'Center', 'designer' ),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                ],
+                'default'   => '',
+                'selectors' => [
+                    '{{WRAPPER}} .pt-container' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .pt-container .pt-price' => 'justify-content: {{VALUE}}; align-items:{{VALUE}};',
+                ],
+            ]
+        );
+
+		$this->end_controls_section();
+		/*style for Table end here */
 
     }
 
@@ -478,39 +774,67 @@ class Pricing_Table extends Widget_base{
 		// echo "</pre>";
 		// die();
 		?>
-			<div class="pt-container">
+			<div class="pt-container <?php echo $settings['label_type'] =='ribbon'?'pt-label-type--ribbon':'pt-label-type--badge';?>">
+				<!-- html for title starts here -->
 				<?php $title_tag = isset($title_tag) && !empty($title_tag) ? $title_tag : 'h2'; 
 					  if(!empty($settings['title'])){ ?>
 						<<?php echo esc_attr($title_tag); ?> class="pt-title"> 
 							<?php echo esc_html($settings['title']); ?>
 						</<?php echo esc_attr($title_tag); ?>>
 					<?php } ?>
-				<div class="pt-price">
-					<div class="pt-price-wrapper">
-						<span class="pt-price-currency"><?php echo esc_html($settings['currency']);?></span>
-						<span class="pt-price-value"><?php echo esc_html($settings['price']);?></span>
+				<!-- html for price ends here -->
+
+				<!-- html for price starts here -->
+				<?php if($settings['price'] !== '') {?>	
+					<div class="pt-price <?php echo $settings['period_position'] == 'bottom'? 'pt-period-bottom':'';?>">
+						<div class="pt-price-wrapper">
+							<?php if(!empty($settings['currency'])) { ?>
+								<span class="pt-price-currency"><?php echo esc_html($settings['currency']);?></span>
+							<?php } ?>
+							<span class="pt-price-value"><?php echo esc_html($settings['price']);?></span>
+						</div>
+						<?php if(!empty($settings['period'])) { ?>
+							<span class="pt-price-period"><?php echo esc_html($settings['period']); ?></span>
+						<?php } ?>	
 					</div>
-					<span class="pt-price-period"><?php echo esc_html($settings['period']); ?></span>
-				</div>
-				<ul>
+				<?php } ?>
+				<!-- html for price ends here -->
+
+				<!-- content html starts here -->
+				<<?php echo $settings['list_type']=='unordered'? "ul": "ol";?> class="pt-content <?php echo $settings['list_type']=='none'?'pt-lt-style-none':''; ?>" >
 					<?php foreach($items as $item) {?>
-					<li>
-						<span class="pt-li-icon"></span>
-						<span><?php echo esc_html($item['item_text']); ?> </span>
-					</li>
+						<li class="pt-items <?php echo $settings['list_type']=='unordered' && !empty($settings['items_icon'])?'pt-lt-style-none':''; ?>">
+							<?php if($settings['list_type']=='unordered' && !empty($settings['items_icon'])) { ?>
+								<span class="pt-li-icon"><?php \Elementor\Icons_Manager::render_icon($settings['items_icon'],array('aria-hidden'=>'true'));?></span>
+							<?php } ?>	
+							<span class="pt-li-item-text"><?php echo esc_html($item['item_text']); ?> </span>
+						</li>
 					<?php } ?>
 				</ul>
-				<div class="pt-button-container">
-					<a href=#>
-						<span class="pt-button-text">Click here</span>
-						<span class="pt-button-icon">
-							<span class="pt-button-icon-inner">
-								<i aria-hidden="true" class="far fa-address-book"></i>
-							</span>		
-						</span>
-					</a>
-				</div>
-				<span class="pt-label"><?php echo esc_html($settings['label']);?></span>
+				<!-- content html ends here -->
+
+				<!--Button html starts here -->
+				<?php if($settings['button_text'] !== ''){ ?>
+					<div class="pt-button-container">
+						<a href="<?php echo isset($settings['link']['url']) && !empty($settings['link']['url'])?$settings['link']['url']:'#';?>">
+							<span class="pt-button-text"><?php echo esc_html($settings['button_text']); ?></span>
+							<?php if(isset($settings['button_icon'])){ ?>
+								<span class="pt-button-icon">
+									<span class="pt-button-icon-inner">
+										<?php \Elementor\Icons_Manager::render_icon($settings['button_icon'], array('aria-hidden'=>'true'));?>
+									</span>		
+								</span>
+							<?php } ?> 	
+						</a>
+					</div>
+				<?php } ?>
+				<!--Button html ends here -->
+
+				<!-- label html starts here -->
+				<?php if(!empty($settings['label'])){ ?>
+					<span class="pt-label"><?php echo esc_html($settings['label']);?></span>
+				<?php } ?>	
+				<!-- label html ends here -->
 			</div>
 		<?php
 

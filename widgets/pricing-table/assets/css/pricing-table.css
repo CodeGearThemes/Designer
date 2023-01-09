@@ -1,0 +1,35 @@
+.pt-price{
+    display:flex;
+    align-items:baseline;
+}
+.pt-container .pt-price .pt-price-wrapper{
+    display:inline-flex;
+    margin:0 0 0 0;
+    line-height:1;
+    justify-content:center;
+    align-items:baseline;
+}
+.pt-period-bottom{
+    flex-direction:column;
+}
+.pt-lt-style-none{   
+    list-style-type:none;
+}
+.pt-container .pt-label{
+    position:absolute;
+    right:15px;
+    background:#000000;
+    color:#ffffff;
+}
+.pt-label-type--badge .pt-label{
+    top:15px;
+    border-radius: 15px;
+    padding:10px;
+}
+.pt-label-type--ribbon .pt-label{
+    top:-1px;
+    border-radius:50px 0 0 50px;
+    transform:rotate(-90deg) translate(0, -100%);
+    transform-origin:right top;
+    padding:5px 15px;
+}
