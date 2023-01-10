@@ -1,5 +1,5 @@
 .drop-cap-content .designer-letter{
-  display:block;
+  display: block;
   float: left;
   font-size: 60px;
   line-height: 1em;
@@ -9,6 +9,19 @@
   align-items: center;
   justify-content: center;
 } */
- .drop-cap-content .designer-text{
+.drop-cap-content .designer-text{
     margin:0;
+}
+.drop-cap-content{
+  position: relative;
+}
+.drop-cap-letter-stroke-effect .designer-letter{
+  color: transparent !important;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #333333;
+  text-shadow: none;
+}
+.drop-cap-letter-clip-effect .designer-letter{
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

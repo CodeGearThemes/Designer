@@ -172,23 +172,6 @@ class Drop_Cap extends Widget_base {
             ]
         );
 
-        $this->add_control(
-			'text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'designer' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .designer-text' => 'color: {{VALUE}};',
-				],
-			]
-		);
-        $this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[   'label'=>'Text Typography',
-				'name' => 'text_typography',
-				'selector' => '{{WRAPPER}} .designer-text',
-			]
-		);
         $this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
@@ -199,9 +182,9 @@ class Drop_Cap extends Widget_base {
 		);
 
         $this->add_control(
-			'border_radius',
+			'letter_border_radius',
 			[
-				'label' => esc_html__( 'Border radius', 'designer' ),
+				'label' => esc_html__( 'Letter Border radius', 'designer' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em' ],
 				'selectors' => [
@@ -210,27 +193,91 @@ class Drop_Cap extends Widget_base {
 			]
 		);
 
-            $this->add_control(
-                'letter-stroke-color',
-                [
-                    'type'=>Controls_Manager::COLOR,
-                    'label'=>'Letter Stroke Color',
-                    'selectors'=>[
-                        '{{WRAPPER}} .designer-letter' =>'-webkit-text-stroke-color: {{VALUE}};',
-                    ],
-                ]
-             );
+		$this->add_control(
+			'letter_stroke_effect',
+			[
+				'label'=>esc_html__('Letter Stroke Effect','designer'),
+				'type'=>Controls_Manager::SELECT,
+				'options'=>[
+					'yes'=>__('Yes','designer'),
+					'no'=>__('No','designer'),
+				],
+				'default'=>'no',
+			]
+		);
 
-             $this->add_control(
-                'letter-stroke-width',
-                [
-                    'type'=>Controls_Manager::NUMBER,
-                    'label'=>'Letter Stroke Width',
-                    'selectors'=>[
-                        '{{WRAPPER}} .designer-letter' =>'-webkit-text-stroke-width: {{VALUE}}px;',
-                    ],
-                ]
-             );
+		$this->add_control(
+			'letter-stroke-color',
+			[
+				'type'=>Controls_Manager::COLOR,
+				'label'=>'Letter Stroke Color',
+				'selectors'=>[
+					'{{WRAPPER}} .drop-cap-content .designer-letter' =>'-webkit-text-stroke-color: {{VALUE}};',
+				],
+				'condition'=>[
+					'letter_stroke_effect'=>'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+		'letter-stroke-width',
+		[
+			'type'=>Controls_Manager::NUMBER,
+			'label'=>'Letter Stroke Width',
+			'selectors'=>[
+				'{{WRAPPER}} .drop-cap-content .designer-letter' =>'-webkit-text-stroke-width: {{VALUE}}px;',
+			],
+			'condition'=>[
+				'letter_stroke_effect'=>'yes',
+			]
+		]
+		);
+
+		$this->add_control(
+			'letter_clip_effect',
+			[
+				'label'=>__('Letter Clip Effect','designer'),
+				'type'=>Controls_Manager::SELECT,
+				'options'=>[
+					'yes'=>__('Yes','designer'),
+					'no'=>__('No','designer'),
+				],
+				'default'=>'no',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+                'name'     => 'clip_background_type',
+                'label'    => __( 'Background type', 'designer' ),
+                'types'    => [ 'classic', 'gradient' ],
+                'selector' => '{{WRAPPER}} .drop-cap-content .designer-letter',
+				'condition'=>[
+					'letter_clip_effect'=>'yes'
+				]
+            ]
+		);
+
+		$this->add_control(
+			'text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'designer' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .designer-text' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[   'label'=>'Text Typography',
+				'name' => 'text_typography',
+				'selector' => '{{WRAPPER}} .designer-text',
+			]
+		);
 
 		$this->end_controls_section();
 
@@ -245,8 +292,10 @@ class Drop_Cap extends Widget_base {
 	 * @access protected
 	 */
 	protected function render() {
-        $text= $this->get_settings_for_display('title'); ?>
-        <div class="drop-cap-content">
+		$settings=$this->get_settings_for_display();
+        $text= $settings['title']; 
+		?>
+        <div class="drop-cap-content <?php echo $settings['letter_stroke_effect']=='yes'? 'drop-cap-letter-stroke-effect':''; echo $settings['letter_clip_effect']=='yes'?'drop-cap-letter-clip-effect':''; ?>">
             <?php if(!empty($text)){
                 ?>
                     <span class="designer-letter">
