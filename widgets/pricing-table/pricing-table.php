@@ -346,7 +346,7 @@ class Pricing_Table extends Widget_base{
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%' ],
                 'selectors'  => [
-                    '{{WRAPPER}} .pt-container .pt-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .pt-container .pt-title' => 'margin:{{TOP}}{{UNIT}}{{RIGHT}}{{UNIT}}{{BOTTOM}}{{UNIT}}{{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -513,22 +513,6 @@ class Pricing_Table extends Widget_base{
 			]
 		);
 
-		// $this->add_control(
-		// 	'list_style_position',
-		// 	[
-		// 		'label'=>esc_html__('List style Position','designer'),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options'=>[
-		// 			'inside'=>__('inside','designer'),
-		// 			'outside'=>__('outside','designer'),
-		// 		],
-		// 		'condition'=>[
-		// 			'list_type'=>'unordered',
-		// 			'list_type'=>'ordered',
-		// 		]
-		// 	]	
-		// );
-
 		$this->add_control(
 			'items_icon',
 			[
@@ -667,16 +651,6 @@ class Pricing_Table extends Widget_base{
 			]
 		);
 
-		// $this->add_group_control(
-		// 	Group_Control_Typography::get_type(),
-		// 	[
-		// 		'label'=>esc_html__('Label Typography', 'designer'),
-		// 		'name'=>'Label Typography',
-		// 		'selectors'=>[
-		// 			'{{WRAPPER}} .pt-label'
-		// 		]
-		// 	]
-		// );
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[   'label'=>esc_html__('Label Typography','designer'),
@@ -748,12 +722,272 @@ class Pricing_Table extends Widget_base{
                 'selectors' => [
                     '{{WRAPPER}} .pt-container' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .pt-container .pt-price' => 'justify-content: {{VALUE}}; align-items:{{VALUE}};',
+					'{{WRAPPER}} .pt-container .pt-button-container'=>'justify-content:{{VALUE}};'
                 ],
             ]
         );
 
+		$this->add_control(
+			'table_background_color',
+			[
+				'label'=>esc_html__('Background Color', 'designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-container'=>'background-color:{{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'table_border_type',
+			[
+				'label'=>esc_html__('Border Type', 'designer'),
+				'type'=>Controls_Manager::SELECT,
+				'options'=>[
+					'default'=>__('Default','designer'),
+					'none'=>__('None','designer'),
+					'solid'=>__('Solid','designer'),
+					'double'=>__('Double','designer'),
+					'dotted'=>__('dotted','designer'),
+					'dashed'=>__('Dashed','designer'),
+					'groove'=>__('Groove','designer'),
+				],
+				'default'=>'none',
+				'selectors'=>[
+					'{{WRAPPER}} .pt-container'=>'border-style:{{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'table_border_width',
+			[
+				'label'=>__('Width','designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-container'=>'border-width:{{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px;'
+				],
+			]
+		);
+
+		$this->add_control(
+			'table_border_width',
+			[
+				'label'=>__('Color', 'designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-container'=>'border-color:{{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'table_border_radius',
+			[
+				'label'=>__('Border Radius', 'designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'size_units'=>['px','%'],
+				'selectors'=>[
+					'{{WRAPPER}} .pt-container'=>'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+				);
+
 		$this->end_controls_section();
 		/*style for Table end here */
+
+		/*style for the button starts here*/
+		$this->start_controls_section(
+			'section_button_style',
+			[
+				'label'=>__('Button', 'designer'),
+				'tab'=>Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[   
+				'label'=>esc_html__('Typography','designer'),
+				'name' => 'button_typography',
+				'selector' => '{{WRAPPER}} .pt-container .pt-button-container',
+			]
+		);
+		$this->start_controls_tabs('button_tabs');
+		$this->start_controls_tab(
+			'button_tab_normal',
+			[
+				'label'=>esc_html__('Normal','designer'),
+			]
+		);
+		$this->add_control(
+			'button_text_color',
+			[
+				'label'=>esc_html__('Text Color', 'designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container .pt-button-text'=>'color:{{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'button_background_color',
+			[
+				'label'=>esc_html__('Background Color', 'designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container > a'=>'background:{{VALUE}};'
+				]
+			]
+		);
+		$this->end_controls_tab();
+		
+		$this->start_controls_tab(
+			'button_tab_hover',
+			[
+				'label'=>esc_html__('Hover','designer'),
+			]
+		);
+		$this->add_control(
+			'button_text_hover_color',
+			[
+				'label'=>esc_html__('Text Hover Color', 'designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container .pt-button-text:hover'=>'color:{{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'button_background_hover_color',
+			[
+				'label'=>esc_html__('Background Hover Color', 'designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container > a:hover'=>'background:{{VALUE}};'
+				]
+			]
+		);
+		$this->end_controls_tab();
+		$this->end_controls_tabs();
+	
+		
+
+		$this->add_control(
+			'button_border_color',
+			[
+				'label'=>__('Border Color','designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container'=>'border-color:{{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_border_type',
+			[
+				'label'=>esc_html__('Button Border Type', 'designer'),
+				'type'=>Controls_Manager::SELECT,
+				'options'=>[
+					'none'=>__('None','designer'),
+					'solid'=>__('Solid','designer'),
+					'double'=>__('Double','designer'),
+					'dotted'=>__('dotted','designer'),
+					'dashed'=>__('Dashed','designer'),
+					'groove'=>__('Groove','designer'),
+				],
+				'default'=>'none',
+				'selectors'=>[
+					'{{WRAPPER}} .pt-container .pt-button-container>a '=>'border-style:{{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_border_width',
+			[
+				'label'=>__('Border Width','designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container>a'=>'border-width:{{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_border_radius',
+			[
+				'label'=>__('Border Radius','designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'size_units'=>['px','%'],
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container>a'=>'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_padding',
+			[
+				'label'=>__('Padding','designer'),
+				'type'=>Controls_Manager::DIMENSIONS,
+				'size_units'=>['px','%'],
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-container>a'=>'padding:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}'
+				],
+			]
+		);
+
+		$this->end_controls_section();
+		/*style for the button ends here */
+
+		/* style for button icon start here */
+		$this->start_controls_section(
+			'section_button_icon_style',
+			[
+				'label'=>__('Button Icon Style', 'designer'),
+				'tab'=>Controls_Manager::TAB_STYLE,
+			]
+		);
+		$this->add_control(
+			'button_icon_size',
+			[
+				'label'=>__('Icon Size', 'designer'),
+				'type'=>Controls_Manager::SLIDER,
+				'size_units'=>['px','em','rem','vw'],
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-icon-inner>i'=>'font-size:{{SIZE}}{{UNIT}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'button_icon_color',
+			[
+				'label'=>__('Icon Color','designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-icon-inner>i'=>'color:{{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'button_icon_background_color',
+			[
+				'label'=>__('Icon Background Color', 'designer'),
+				'type'=>Controls_Manager::COLOR,
+				'selectors'=>[
+					'{{WRAPPER}} .pt-button-icon'=>'background-color:{{VALUE}};'
+				]
+			]
+		);
+
+		$this->end_controls_section();
+		/*style for button icon ends here */
 
     }
 
@@ -802,8 +1036,8 @@ class Pricing_Table extends Widget_base{
 
 				<!-- content html starts here -->
 				<<?php echo $settings['list_type']=='unordered'? "ul": "ol";?> class="pt-content <?php echo $settings['list_type']=='none'?'pt-lt-style-none':''; ?>" >
-					<?php foreach($items as $item) {?>
-						<li class="pt-items <?php echo $settings['list_type']=='unordered' && !empty($settings['items_icon'])?'pt-lt-style-none':''; ?>">
+					<?php foreach($items as $item) {//var_dump($item);?>
+						<li class="pt-items <?php echo $settings['list_type']=='unordered' && !empty($settings['items_icon'])?'pt-lt-style-none':'';?>" <?php echo $item['excluded']=='yes'?'data-exclude=pt-excluded-item':'';?>>
 							<?php if($settings['list_type']=='unordered' && !empty($settings['items_icon'])) { ?>
 								<span class="pt-li-icon"><?php \Elementor\Icons_Manager::render_icon($settings['items_icon'],array('aria-hidden'=>'true'));?></span>
 							<?php } ?>	

@@ -22,7 +22,7 @@
     color:#ffffff;
 }
 .pt-label-type--badge .pt-label{
-    top:15px;
+    top:20px;
     border-radius: 15px;
     padding:10px;
 }
@@ -32,4 +32,18 @@
     transform:rotate(-90deg) translate(0, -100%);
     transform-origin:right top;
     padding:5px 15px;
+}
+.pt-button-container{
+    width:100%;
+    display:flex;
+}
+.pt-container .pt-title{
+    margin-top: 0px;
+}
+.pt-container{
+    padding:30px 30px 30px 30px;
+}
+.pt-container .pt-content>li[data-exclude="pt-excluded-item"]{
+    text-decoration:line-through;
+    color:rgb(0, 0, 0, .6);
 }
